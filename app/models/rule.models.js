@@ -13,7 +13,7 @@ const Rule = sequelize.define("rule", {
   },
   Rules: {
     type: DataTypes.TEXT,
-    allowNull: false
+    allowNull: true
   }
 }, {
   tableName: "rule" 

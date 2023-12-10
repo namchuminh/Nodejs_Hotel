@@ -3,7 +3,6 @@ const router = express.Router();
 const categoryController = require('../../controllers/admin/category.controller');
 const upload = require('../../middlewares/upload.middlewares'); // Đường dẫn đến file middleware upload
 
-router.get('/', categoryController.index);
 router.get('/add', categoryController.viewAdd);
 router.post('/add', upload.single('avatar'), categoryController.add);
 router.get('/update/:id', categoryController.viewUpdate);

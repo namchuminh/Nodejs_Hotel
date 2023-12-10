@@ -4,14 +4,13 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-flex align-items-center justify-content-between">
-                        <h4 class="mb-0 font-size-18">Tin Tức</h4>
+                        <h4 class="mb-0 font-size-18">Phòng Nghỉ</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="/admin/">Trang Chủ</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="/admin/news/">Tin
-                                        Tức</a></li>
-                                <li class="breadcrumb-item active">Cập Nhật Tin Tức</li>
+                                <li class="breadcrumb-item"><a href="/admin/room/">Phòng Nghỉ</a></li>
+                                <li class="breadcrumb-item active">Thêm Phòng Nghỉ</li>
                             </ol>
                         </div>
                     </div>
@@ -24,7 +23,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Nhập nội dung tin tức</h4>
+                        <h4 class="card-title">Nhập thông tin Phòng Nghỉ</h4>
                         <div id="basic-datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                             <div class="row">
                                 <div class="col-xl-12">
@@ -32,21 +31,31 @@
                                         <div class="card-body">
                                             <form method="POST" enctype="multipart/form-data">
                                                 <div class="form-group">
-                                                    <label for="simpleinput">Tiêu Đề</label>
+                                                    <label for="simpleinput">Tên Phòng</label>
                                                     <input type="text" id="simpleinput" class="form-control tensanpham"
-                                                        placeholder="Tiêu đề" required name="tieude"
-                                                        value="<%= news.Title %>">
+                                                        placeholder="Tên phòng" required name="name"
+                                                        value="">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="simpleinput">Số Người Tối Đa</label>
+                                                    <input type="number" id="simpleinput" class="form-control"
+                                                        placeholder="Số người tối đa" required name="people"
+                                                        value="">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="simpleinput">Giá Phòng</label>
+                                                    <input type="number" id="simpleinput" class="form-control"
+                                                        placeholder="Giá phòng" required name="price"
+                                                        value="">
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label for="simpleinput">Chuyên Mục</label>
-                                                    <select class="form-control" name="chuyenmuc">
+                                                    <select class="form-control" name="categoryId">
                                                         <% category.map(item => { %>
-                                                            <% if(news.CategoryId == item.Id){ %>
-                                                                <option value="<%= item.Id %>" selected><%= item.Name %></option>
-                                                            <% }else{ %>
-                                                                <option value="<%= item.Id %>"><%= item.Name %></option>
-                                                            <% } %>
+                                                            <option value="<%= item.Id %>"><%= item.Name %></option>
                                                         <% }) %>
                                                     </select>
                                                 </div>
@@ -57,14 +66,14 @@
                                                         style="float: right; cursor: pointer; text-decoration: underline;">Tạo
                                                         Tự Động</span>
                                                     <input type="text" id="duongdan" class="form-control"
-                                                        placeholder="Đường dẫn tin tức..." required name="duongdan"
-                                                        value="<%= news.Slug %>">
+                                                        placeholder="Đường dẫn..." required name="slug"
+                                                        value="">
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label>Ảnh Chính</label>
                                                     <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" name="anhchinh"
+                                                        <input type="file" class="custom-file-input" name="avatar"
                                                             id="customFile">
                                                         <label class="custom-file-label" for="customFile">Chọn
                                                             Ảnh</label>
@@ -72,25 +81,17 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="simpleinput">Thẻ</label>
-                                                    <input type="text" id="simpleinput" class="form-control"
-                                                        placeholder="Thẻ cách bởi dấu phẩy..." required name="the"
-                                                        value="<%= news.Tag %>">
-                                                </div>
-
-
-                                                <div class="form-group">
                                                     <label for="exampleFormControlTextarea1">Nội Dung</label>
                                                     <textarea required class="form-control" id="myTextarea"
-                                                        name="noidung">
-                                                    <%= news.Content %>
-                                                </textarea>
+                                                        name="description">
+                                                    </textarea>
                                                 </div>
-                                                <a href="/admin/news/"
+
+                                                <a href="/admin/room/"
                                                     class="btn btn-secondary waves-effect waves-light">Quay Lại</a>
                                                 <button type="submit"
-                                                    class="btn btn-primary waves-effect waves-light">Cập Nhật
-                                                    Tin Tức</button>
+                                                    class="btn btn-primary waves-effect waves-light">Thêm
+                                                    Phòng Nghỉ</button>
                                             </form>
                                         </div>
                                         <!-- end card-body-->
@@ -153,4 +154,5 @@
             })
         });
     </script>
+    
     <%- include('../layouts/footer.ejs') %>
