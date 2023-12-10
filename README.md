@@ -1,8 +1,8 @@
-# Cấu trúc thư mục dự án Node.js Rest APIs với Express & MySQL
+# Hướng Dẫn
 
 ## Clone Repo
 ```
-git clone https://github.com/namchuminh/nodejs_express_mysql_api_structure.git
+git clone https://github.com/namchuminh/Nodejs_Hotel.git
 ```
 
 ## Project setup
@@ -20,6 +20,12 @@ npm install --save-dev nodemon
 "scripts": {
   "start": "nodemon server.js"
 }
+```
+
+## Create Database "hotel_nodejs" in MySQL
+
+```
+Import file hotel_nodejs.sql to Database
 ```
 
 ### Run
