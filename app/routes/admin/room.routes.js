@@ -12,6 +12,13 @@ router.get('/:id/facility', roomController.facility);
 router.post('/:id/facility', roomController.updateFacility);
 router.get('/:id/rule', roomController.rule);
 router.post('/:id/rule', roomController.updateRule);
+router.get('/:id/image', roomController.image);
+router.post('/:id/image', upload.fields([
+    { name: 'image1', maxCount: 1 },
+    { name: 'image2', maxCount: 1 },
+    { name: 'image3', maxCount: 1 },
+    { name: 'image4', maxCount: 1 }
+]), roomController.updateImage);
 router.get('/', roomController.index);
 
 module.exports = router;

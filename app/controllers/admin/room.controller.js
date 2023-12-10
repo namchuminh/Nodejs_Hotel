@@ -2,7 +2,7 @@ const Rooms = require("../../models/rooms.models");
 const Category = require("../../models/category.models");
 const Facility = require("../../models/facility.models");
 const Rule = require("../../models/rule.models");
-
+const Image = require("../../models/image.models");
 
 class roomController {
   //[GET] /admin/room
@@ -276,7 +276,7 @@ class roomController {
 
       for (const key in req.body) {
         const value = req.body[key];
-        await Rule.create({ Rules: value, RoomId: id }); // Giả sử Rule là mô hình Sequelize
+        await Rule.create({ Rules: value, RoomId: id }); 
       }
 
       const ruleCount = await Rule.count({ where: { RoomId: id } });
@@ -287,6 +287,98 @@ class roomController {
       return res.status(500).send("Đã xảy ra lỗi cập nhật quy tắc.");
     }
   }
+
+  //[GET] /admin/room/:id/image
+  async image(req, res) {
+    const { id } = req.params;
+    
+    try {
+      const room = await Rooms.findByPk(id);
+      if (!room) {
+        return res.redirect('/admin/room/');
+      }
+
+      const imageCount = await Image.count({ where: { RoomId: id } });
+      const image = await Image.findAll({where: {RoomId: id} });
+
+      return res.render('admin/room/image', { room, imageCount, image});
+    } catch (err) {
+      console.error(err);
+      return res.status(500).send("Đã xảy ra lỗi hiển thị hình ảnh phòng.");
+    }
+  }
+
+  //[POST] /admin/room/:id/image
+  async updateImage(req, res) {
+    const { id } = req.params;
+    
+    try {
+      const room = await Rooms.findByPk(id);
+      if (!room) {
+        return res.redirect('/admin/room/');
+      }
+
+      const imageCount = await Image.count({ where: { RoomId: id } });
+      const image = await Image.findAll({where: {RoomId: id} });
+
+      if(imageCount < 1){
+        if (req.files && Object.keys(req.files).length == 4) {
+          await Image.create({
+            RoomId: id, 
+            Image: req.base_url + req.files.image1[0].path.replace(/\\/g, '/'), 
+          });
+
+          await Image.create({
+            RoomId: id, 
+            Image: req.base_url + req.files.image2[0].path.replace(/\\/g, '/'), 
+          });
+
+          await Image.create({
+            RoomId: id, 
+            Image: req.base_url + req.files.image3[0].path.replace(/\\/g, '/'), 
+          });
+
+          await Image.create({
+            RoomId: id, 
+            Image: req.base_url + req.files.image4[0].path.replace(/\\/g, '/'), 
+          });
+
+        }else{
+          return res.render('admin/room/image', { room, imageCount, image, error: "Vui lòng nhập đủ số lượng hình ảnh!"});
+        }
+      }else{
+        const images = await Image.findAll({where: {RoomId: id} });
+        const ids = [];
+        for (const image of images) {
+          ids.push(image.dataValues.Id);
+        }
+
+        if(req.files.image1){
+          await Image.update({ Image: req.base_url + req.files.image1[0].path.replace(/\\/g, '/') }, { where: { Id: ids[0], }, });
+        }
+
+        if(req.files.image2){
+          await Image.update({ Image: req.base_url + req.files.image2[0].path.replace(/\\/g, '/') }, { where: { Id: ids[1], }, });
+        }
+
+        if(req.files.image3){
+          await Image.update({ Image: req.base_url + req.files.image3[0].path.replace(/\\/g, '/') }, { where: { Id: ids[2], }, });
+        }
+
+        if(req.files.image4){
+          await Image.update({ Image: req.base_url + req.files.image4[0].path.replace(/\\/g, '/') }, { where: { Id: ids[3], }, });
+        }
+      }
+
+      const imageUpdated = await Image.findAll({where: {RoomId: id} });
+      const imageCountUpdated = await Image.count({ where: { RoomId: id } });
+      return res.render('admin/room/image', { room, imageCount: imageCountUpdated, image: imageUpdated, success: "Cập nhật hình ảnh phòng nghỉ thành công!"});
+    } catch (err) {
+      console.error(err);
+      return res.status(500).send("Đã xảy ra lỗi cập nhật quy tắc.");
+    }
+  }
+
 
 }
 

@@ -57,6 +57,10 @@
 	                                                colspan="1"
 	                                                >Quy Tắc Phòng
 	                                            </th>
+                                                <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
+	                                                colspan="1"
+	                                                >Hình Ảnh
+	                                            </th>
 	                                            <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
 	                                                colspan="1"
 	                                                >Cập Nhật
@@ -91,7 +95,9 @@
                                                     <td><a class="btn btn-success" href="/admin/room/<%= room.Id %>/facility/"><i class="bx bxs-extension"></i> TIỆN ÍCH</a> </td>
     
                                                     <td><a class="btn btn-secondary" href="/admin/room/<%= room.Id %>/rule/"><i class="bx bxs-check-shield"></i> QUY TẮC</a></td>
-        
+                                                    
+                                                    <td><a class="btn btn-info" href="/admin/room/<%= room.Id %>/image/"><i class="bx bxs-image-alt"></i> HÌNH ẢNH</a></td>
+
                                                     <td><a class="btn btn-primary" href="/admin/room/update/<%= room.Id %>/"><i class="bx bxs-edit"></i> CẬP NHẬT</a> </td>
     
                                                     <td><a class="btn btn-danger" href="/admin/room/delete/<%= room.Id %>/"><i class="bx bxs-trash-alt"></i> XÓA</a></td>
