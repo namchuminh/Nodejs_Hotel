@@ -175,7 +175,7 @@ class roomController {
             RoomId:	id,
             Wifi: 0,	
             Washer: 0,	
-            Bed: 0,	
+            Bed: 1,	
             Gym: 0,	
             Kitchen: 0,	
             Air: 0,	
@@ -212,7 +212,7 @@ class roomController {
       
       if(washer != 0 && washer != 1) return res.render('admin/room/facility', { room, facility, error: "Máy giặt chọn không hợp lệ!" }); 
 
-      if(bed != 0 && bed != 1) return res.render('admin/room/facility', { room, facility, error: "Giường ngủ chọn không hợp lệ!" }); 
+      if(bed != 2 && bed != 1 && bed != 3) return res.render('admin/room/facility', { room, facility, error: "Giường ngủ chọn không hợp lệ!" }); 
 
       if(gym != 0 && gym != 1) return res.render('admin/room/facility', { room, facility, error: "Dụng cụ tập Gym chọn không hợp lệ!" }); 
 
