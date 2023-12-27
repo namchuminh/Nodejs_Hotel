@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db.config.js");
 const Category = require("../models/category.models");
+const Facility = require("../models/facility.models");
 
 
 const Rooms = sequelize.define("rooms", {
@@ -47,4 +48,5 @@ const Rooms = sequelize.define("rooms", {
 
 module.exports = Rooms;
 
+Rooms.hasOne(Facility, { foreignKey: 'RoomId' });
 Rooms.belongsTo(Category, { foreignKey: 'CategoryId', as: 'category' });

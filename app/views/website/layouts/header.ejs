@@ -52,28 +52,40 @@
                             <a class="nav-item" href="/">Trang Chủ</a>
                         </li>
                         <li class="header_nav-list_item">
-                            <a class="nav-item" href="about.html">Về Chúng Tôi</a>
+                            <a class="nav-item" href="/phong-nghi/">Phòng Nghỉ</a>
                         </li>
                         <li class="header_nav-list_item">
-                            <a class="nav-item" href="about.html">Phòng Nghỉ</a>
-                        </li>
-                        <li class="header_nav-list_item">
-                            <a class="nav-item" href="about.html">Tin Tức</a>
+                            <a class="nav-item" href="/tin-tuc/">Tin Tức</a>
                         </li>
 
                         <li class="header_nav-list_item">
-                            <a class="nav-item" href="about.html">Khám Phá</a>
+                            <a class="nav-item" href="/tra-cuu/">Liên Hệ</a>
                         </li>
 
-                        <li class="header_nav-list_item dropdown">
-                            <a class="nav-link nav-link--contacts dropdown-toggle d-inline-flex align-items-center"
-                                href="/" >
-                                Liên Hệ
-                                <i class="icon-chevron_down--entypo icon"></i>
-                            </a>
-                            <div class="dropdown-menu collapse" id="contactsMenu">
-                            </div>
+                        <li class="header_nav-list_item">
+                            <a class="nav-item" href="/tra-cuu/">Tra Cứu</a>
                         </li>
+                        <% if(customer){ %>
+                            <li class="header_nav-list_item dropdown">
+                                <a class="nav-link nav-link--contacts dropdown-toggle d-inline-flex align-items-center"
+                                    href="/khach-hang/">
+                                    <i class="icon-user icon d-block" style="margin-bottom: 5px; margin-right: 10px;"></i>
+                                    <%= customer.FullName %> 
+                                </a>
+                                <div class="dropdown-menu collapse" id="contactsMenu">
+                                </div>
+                            </li>
+                        <% }else{ %>
+                            <li class="header_nav-list_item dropdown">
+                                <a class="nav-link nav-link--contacts dropdown-toggle d-inline-flex align-items-center"
+                                    href="/khach-hang/dang-nhap/" >
+                                    Đăng Nhập
+                                    <i class="icon-chevron_down--entypo icon"></i>
+                                </a>
+                                <div class="dropdown-menu collapse" id="contactsMenu">
+                                </div>
+                            </li>
+                        <% } %>
                     </ul>
                 </nav>
                 <ul class="socials d-flex align-items-center">

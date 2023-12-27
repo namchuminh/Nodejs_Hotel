@@ -17,7 +17,7 @@ import AOS from 'aos';
 import svg4everybody from "svg4everybody";
 import LazyLoad from "vanilla-lazyload";
 
-import {preventDefault} from "./modules/helpers";
+import {namDung} from "./modules/helpers";
 import {drawNav, makeElementSticky} from "./modules/nav";
 import initMap from "./modules/map";
 import {validate, setBookingGuestsValue} from "./modules/forms";
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const lazyload = new LazyLoad();
 
-    preventDefault();
+    namDung();
 
     makeElementSticky();
 

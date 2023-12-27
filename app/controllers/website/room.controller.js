@@ -1,3 +1,4 @@
+const Sequelize = require('sequelize');
 const Rooms = require("../../models/rooms.models");
 const Category = require("../../models/category.models");
 const Facility = require("../../models/facility.models");
@@ -5,7 +6,7 @@ const Rule = require("../../models/rule.models");
 const Image = require("../../models/image.models");
 
 class roomController {
-    //[GET] /room
+    //[GET] /phong-nghi
     async viewAll(req, res) {
         try {
             const perPage = 5;
@@ -35,25 +36,38 @@ class roomController {
         }
     }
 
-    //[GET] /room/:slug
+    //[GET] /phong-nghi/:slug
     async viewDetail(req, res) {
+        const { id } = req.params;
         try {
-            const perPage = 5;
-            const page = parseInt(req.query.page) || 1;
+            const room = await Rooms.findOne({ where: { slug: id } });
+            if (!room) {
+                return res.render('website/error/index');
+            }
 
-            const { count, rows: roomList } = await Rooms.findAndCountAll({
-                limit: perPage,
-                offset: (page - 1) * perPage,
-                include: [{ model: Category, as: 'category' }],
-                order: [['Id', 'DESC']] // Thêm điều kiện ORDER BY Id DESC
+            const facility = await Facility.findAll({
+                where: { RoomId: room.Id }
             });
 
-            const totalPages = Math.ceil(count / perPage);
+            const rule = await Rule.findAll({
+                where: { RoomId: room.Id }
+            });
 
-            return res.render('admin/room/index', { roomList, totalPages, currentPage: page });
+            const image = await Image.findAll({
+                where: { RoomId: room.Id }
+            });
+
+            const related = await Rooms.findAll({
+                where: { CategoryId: room.CategoryId },
+                include: [Facility], //Lấy kèm theo Facility tương ứng
+                order: Sequelize.literal('RAND()'), // Sử dụng hàm RAND() để sắp xếp ngẫu nhiên
+                limit: 4 // Lấy ra 4 bản ghi
+            });
+
+            return res.render('website/room/detail', {room,facility,rule,image,related,title: "Hosteller - " + room.Name});
         } catch (err) {
             console.error(err);
-            return res.status(500).send("Đã xảy ra lỗi khi tải danh sách phòng.");
+            return res.status(500).send("Đã xảy ra lỗi khi tải chi tiết phòng.");
         }
     }
 

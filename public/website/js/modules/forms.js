@@ -43,37 +43,6 @@ export function validateForm(target, fieldSelector = '.field') {
                 });
             }
 
-            if (Array.from(inputsArr).every(valid)) {
-                inputsArr.forEach(el => {
-                    el.classList.remove('error');
-                    el.value = '';
-                })
-                if (form.dataset.type === 'search') {
-                    notificationText = 'Nothing found.';
-                } else if (form.dataset.type === 'subscribe') {
-                    notificationText = 'Subscription confirmation has been sent to your Email.';
-                } else if (form.dataset.type === 'feedback') {
-                    notificationText = 'Your message has been sent. We\'ll reply you as soon as possible.';
-                } else if (form.dataset.type === 'reviewRoom' || form.dataset.type === 'comment') {
-                    notificationText = 'Your comment is awaiting moderation.';
-                }
-
-                let notification = {
-                    toast: true,
-                    position: 'top-end',
-                    timer: 3000,
-                    html: `<p class="main">${notificationText}</p>`,
-                    customClass: {
-                        popup: 'alert_popup',
-                        title: 'alert_popup-title',
-                        htmlContainer: 'alert_popup-content',
-                        closeButton: 'alert_popup-close',
-                        container: 'alert_popup-container'
-                    }
-                };
-
-                initModal(notification);
-            }
         })
     }
 }

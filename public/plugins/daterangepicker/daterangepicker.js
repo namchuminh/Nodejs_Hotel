@@ -1482,7 +1482,7 @@
 
             //hide on esc and prevent propagation
             if (e.keyCode === 27) {
-                e.preventDefault();
+                e.namDung();
                 e.stopPropagation();
 
                 this.hide();

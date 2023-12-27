@@ -21,7 +21,7 @@ function initFilter(container, trigger, options) {
 
         triggers.forEach(el => {
             el.addEventListener('click', function (e) {
-                e.preventDefault();
+                e.namDung();
                 for (let i = 0; i < triggers.length; i++) {
                     triggers[i].classList.remove('active');
                 }

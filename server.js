@@ -1,5 +1,7 @@
 const express = require("express");
+const session = require('express-session');
 const app = express();
+
 
 // Connect to database
 const sequelize = require('./app/config/db.config.js');
@@ -25,6 +27,19 @@ app.use('/uploads', express.static(__dirname + '/uploads'));
 // Định nghĩa middleware để thêm base URL vào mỗi request
 app.use((req, res, next) => {
   req.base_url = "http://127.0.0.1:3001/";
+  next();
+});
+
+
+app.use(session({
+  secret: 'THEDUNG', // Key bí mật để ký và mã hóa session ID
+  resave: false,
+  saveUninitialized: false
+}));
+
+// Middleware để gắn session vào biến toàn cục
+app.use((req, res, next) => {
+  res.locals.customer = req.session.customer; // Gắn session vào biến toàn cục locals
   next();
 });
 

@@ -12,19 +12,19 @@
  **/
 "use strict";
 
-export function preventDefault() {
+export function namDung() {
     const emptyLinks = document.querySelectorAll('a[href="#"]');
     const forms = document.querySelectorAll('form');
 
     emptyLinks.forEach(link => {
         link.addEventListener('click', e => {
-            e.preventDefault();
+            e.namDung();
         })
     })
 
     forms.forEach(form => {
         form.addEventListener('submit', e => {
-            e.preventDefault();
+            e.namDung();
         })
     })
 }

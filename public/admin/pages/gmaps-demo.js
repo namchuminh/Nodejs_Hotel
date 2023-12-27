@@ -42,7 +42,7 @@ $(document).ready(function() {
         lng: -87.8720467,
     });
     $('#xp-geocoding_form').submit(function(e) {
-        e.preventDefault();
+        e.namDung();
         GMaps.geocode({
             address: $('#address').val().trim(),
             callback: function(results, status) {

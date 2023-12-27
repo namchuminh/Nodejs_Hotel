@@ -36,7 +36,7 @@ function setYTFrame() {
                             player.stopVideo();
                         }
                     } else if (e.target === trigger || (e.target.closest('a') !== null && e.target.closest('a').classList.contains('video-play'))) {
-                        e.preventDefault();
+                        e.namDung();
                         popup.classList.remove('fadeOut');
                         popup.classList.add('visible', 'fadeIn');
                     }

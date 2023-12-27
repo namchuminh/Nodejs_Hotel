@@ -122,7 +122,7 @@
           // Form to add new event
 
           $("#add_event_form").on('submit', function(ev) {
-              ev.preventDefault();
+              ev.namDung();
 
               var $event = $(this).find('.new-event-form'),
                   event_name = $event.val();
