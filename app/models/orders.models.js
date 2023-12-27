@@ -29,6 +29,26 @@ const Orders = sequelize.define("orders", {
   },
   CustomerId: {
     type: DataTypes.NUMBER,
+    allowNull: true
+  },
+  FullName: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  Email: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  Phone: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  StatusOrder: {
+    type: DataTypes.NUMBER,
+    allowNull: false
+  },
+  StatusPay: {
+    type: DataTypes.NUMBER,
     allowNull: false
   }
 }, {

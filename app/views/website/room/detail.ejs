@@ -341,21 +341,20 @@
                             <span class="pricing_price h2" style="font-size: 30px;"><%= room.Price.toLocaleString() %>đ</span>
                             / 1 đêm
                         </span>
-                        <form class="booking" action="#" method="post" autocomplete="off" data-type="booking">
+                        <form class="booking" action="/dat-phong/" method="post" autocomplete="off" data-type="booking">
+                            <input type="hidden" name="RoomId" value="<%= room.Id %>">
                             <div class="booking_group d-flex flex-column">
                                 <label class="booking_group-label h5" for="checkIn">Ngày thuê phòng</label>
                                 <div class="booking_group-wrapper">
                                     <i class="icon-calendar icon"></i>
-                                    <input class="booking_group-field field required" data-type="date" data-start="true" type="text" id="checkIn" name="contactsDate" placeholder="Chọn ngày thuê" readonly="">
-                                    <i class="icon-chevron_down icon"></i>
+                                    <input class="booking_group-field field required" type="date" name="startDate">
                                 </div>
                             </div>
                             <div class="booking_group d-flex flex-column">
                                 <label class="booking_group-label h5" for="checkOut">Ngày trả phòng</label>
                                 <div class="booking_group-wrapper">
                                     <i class="icon-calendar icon"></i>
-                                    <input class="booking_group-field field required" data-type="date" data-end="true" type="text" id="checkOut" name="contactsDate" placeholder="Chọn ngày trả" readonly="" style="pointer-events: none;">
-                                    <i class="icon-chevron_down icon"></i>
+                                    <input class="booking_group-field field required" type="date" name="endDate">
                                 </div>
                             </div>
                             <button class="booking_btn btn theme-element theme-element--accent" type="submit">Đặt Phòng</button>

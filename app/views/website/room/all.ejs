@@ -75,7 +75,10 @@
                                         / 7 ngày
                                     </span>
                                 </div>
-                                <a class="theme-element theme-element--accent btn" href="#">Đặt Phòng</a>
+                                <form action="/dat-phong/" method="POST">
+                                    <input type="hidden" value="<%= room.Id %>" name="RoomId">
+                                    <button class="theme-element theme-element--accent btn">Đặt Phòng</button>
+                                </form>
                             </div>
                         </div>
                     </div>
