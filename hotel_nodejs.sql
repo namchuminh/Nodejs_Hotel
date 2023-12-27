@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 10, 2023 at 09:55 PM
+-- Generation Time: Dec 27, 2023 at 03:53 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -43,7 +43,7 @@ CREATE TABLE `category` (
 
 INSERT INTO `category` (`Id`, `Name`, `Avatar`, `Slug`, `Type`, `createdAt`, `updatedAt`) VALUES
 (4, 'Chuyên mục ', 'http://127.0.0.1:3001/uploads/1702205588116.jpg', 'chuyen-muc-2', 1, '2023-12-06 16:26:31', '2023-12-10 10:53:16'),
-(5, 'Công Nghệ Thông Tin', 'http://127.0.0.1:3001/uploads/1702205865034.jpg', 'cong-nghe-thong-tin', 2, '2023-12-10 10:57:45', '2023-12-10 10:57:45'),
+(5, 'Phòng Vip', 'http://127.0.0.1:3001/uploads/1702205865034.jpg', 'cong-nghe-thong-tin', 2, '2023-12-10 10:57:45', '2023-12-10 10:57:45'),
 (6, 'Mục mới', 'http://127.0.0.1:3001/uploads/1702219094767.jpg', 'muc-moi', 1, '2023-12-10 14:38:14', '2023-12-10 14:38:14');
 
 -- --------------------------------------------------------
@@ -77,6 +77,14 @@ CREATE TABLE `customer` (
   `updatedAt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`Id`, `FullName`, `Phone`, `Email`, `Username`, `Password`, `createdAt`, `updatedAt`) VALUES
+(1, 'Nguyễn Văn An', '0999888999', 'nguyenvana@gmail.com', 'nguyenvana', '20ca70c7c8f494c7bd1d54ad23d40cde', '2023-12-27 15:58:48', '2023-12-27 15:58:48'),
+(6, 'Nguyễn Văn Bình', '0966999999', 'nguyenvanb@gmail.com', 'nguyenvanb', '23280a0ad9238d00c62b0272af265c57', '2023-12-27 10:08:29', '2023-12-27 10:08:29');
+
 -- --------------------------------------------------------
 
 --
@@ -104,7 +112,9 @@ CREATE TABLE `facility` (
 --
 
 INSERT INTO `facility` (`Id`, `RoomId`, `Wifi`, `Washer`, `Bed`, `Gym`, `Kitchen`, `Air`, `Support`, `Storage`, `Bathroom`, `createdAt`, `updatedAt`) VALUES
-(4, 6, 1, 0, 0, 1, 0, 0, 0, 1, 1, '2023-12-10 19:38:42', '2023-12-10 19:39:00');
+(6, 7, 0, 0, 3, 0, 0, 1, 0, 0, 1, '2023-12-11 10:13:38', '2023-12-11 10:15:05'),
+(7, 6, 0, 0, 2, 0, 0, 0, 0, 0, 0, '2023-12-11 10:20:00', '2023-12-11 10:20:13'),
+(8, 8, 1, 1, 3, 1, 1, 1, 1, 1, 1, '2023-12-11 11:45:23', '2023-12-23 20:47:05');
 
 -- --------------------------------------------------------
 
@@ -119,6 +129,20 @@ CREATE TABLE `image` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `image`
+--
+
+INSERT INTO `image` (`Id`, `RoomId`, `Image`, `createdAt`, `updatedAt`) VALUES
+(29, 7, 'http://127.0.0.1:3001/uploads/1703377253590.jpg', '2023-12-24 00:20:53', '2023-12-24 00:20:53'),
+(30, 7, 'http://127.0.0.1:3001/uploads/1703377253592.jpg', '2023-12-24 00:20:53', '2023-12-24 00:20:53'),
+(31, 7, 'http://127.0.0.1:3001/uploads/1703377253595.jpg', '2023-12-24 00:20:53', '2023-12-24 00:20:53'),
+(32, 7, 'http://127.0.0.1:3001/uploads/1703377253597.jpg', '2023-12-24 00:20:53', '2023-12-24 00:20:53'),
+(33, 8, 'http://127.0.0.1:3001/uploads/1703378680730.jpg', '2023-12-24 00:44:10', '2023-12-24 00:44:40'),
+(34, 8, 'http://127.0.0.1:3001/uploads/1703378680731.webp', '2023-12-24 00:44:10', '2023-12-24 00:44:40'),
+(35, 8, 'http://127.0.0.1:3001/uploads/1703378650754.jpg', '2023-12-24 00:44:10', '2023-12-24 00:44:10'),
+(36, 8, 'http://127.0.0.1:3001/uploads/1703378687839.jpg', '2023-12-24 00:44:10', '2023-12-24 00:44:47');
 
 -- --------------------------------------------------------
 
@@ -158,10 +182,24 @@ CREATE TABLE `orders` (
   `Start` datetime NOT NULL,
   `End` datetime NOT NULL,
   `Total` int(11) NOT NULL,
-  `CustomerId` int(11) NOT NULL,
+  `CustomerId` int(11) DEFAULT NULL,
+  `FullName` varchar(255) NOT NULL,
+  `Email` varchar(255) NOT NULL,
+  `Phone` varchar(11) NOT NULL,
+  `StatusOrder` int(1) NOT NULL DEFAULT 1,
+  `StatusPay` int(1) NOT NULL DEFAULT 0,
   `createdAt` datetime NOT NULL DEFAULT current_timestamp(),
   `updatedAt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`Id`, `Code`, `RoomId`, `Start`, `End`, `Total`, `CustomerId`, `FullName`, `Email`, `Phone`, `StatusOrder`, `StatusPay`, `createdAt`, `updatedAt`) VALUES
+(19, 'HFVPFZEJKSPZ', 8, '2023-12-27 00:00:00', '2023-12-30 00:00:00', 600000, 1, 'Nguyễn Văn An', 'nguyenvana@gmail.com', '0999888999', 1, 0, '2023-12-27 14:42:35', '2023-12-27 14:42:35'),
+(20, 'OGOEHXFVUEFA', 7, '2023-12-27 00:00:00', '2024-01-06 00:00:00', 13200000, 1, 'Nguyễn Văn An', 'nguyenvana@gmail.com', '0999888999', 1, 0, '2023-12-27 14:43:04', '2023-12-27 14:43:04'),
+(21, 'ZLMPYCNSLAHY', 6, '2023-12-27 00:00:00', '2024-01-06 00:00:00', 13200000, NULL, 'Nguyễn Văn Bình', 'chuminhnamma@gmail.com', '0999999999', 1, 0, '2023-12-27 14:50:40', '2023-12-27 14:50:40');
 
 -- --------------------------------------------------------
 
@@ -188,8 +226,9 @@ CREATE TABLE `rooms` (
 --
 
 INSERT INTO `rooms` (`Id`, `Name`, `Description`, `Avatar`, `Price`, `People`, `CategoryId`, `Slug`, `Status`, `createdAt`, `updatedAt`) VALUES
-(6, 'Phòng 01', '<p>abcded</p>\r\n', 'http://127.0.0.1:3001/uploads/1702224488446.jpg', 1500000, 5, 5, 'cong-nghe-thong-tin', 1, '2023-12-10 16:08:08', '2023-12-10 16:08:08'),
-(7, 'Phòng 02', '<p>abcded</p>\r\n', 'http://127.0.0.1:3001/uploads/1702239014204.jpg', 1500000, 5, 5, 'phong-02', 1, '2023-12-10 20:10:14', '2023-12-10 20:10:14');
+(6, 'Phòng 01', '<p>abcded</p>\r\n', 'http://127.0.0.1:3001/uploads/1702292412972.webp', 1500000, 5, 5, 'cong-nghe-thong-tin1', 1, '2023-12-10 16:08:08', '2023-12-23 20:06:11'),
+(7, 'Phòng 02', '<p>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.&nbsp;<a href=\"https://en.wikipedia.org/wiki/Lorem_ipsum\">Wikipedia</a></p>\r\n', 'http://127.0.0.1:3001/uploads/1702292396085.jpg', 1500000, 5, 5, 'phong-02', 1, '2023-12-10 20:10:14', '2023-12-11 11:07:14'),
+(8, 'Công Nghệ Thông Tin', '<p><strong>abacded</strong></p>\r\n', 'http://127.0.0.1:3001/uploads/1702293627373.webp', 150000, 5, 5, 'cong-nghe-thong-tin', 1, '2023-12-11 11:20:27', '2023-12-23 20:35:22');
 
 -- --------------------------------------------------------
 
@@ -302,19 +341,19 @@ ALTER TABLE `contact`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `facility`
 --
 ALTER TABLE `facility`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `image`
 --
 ALTER TABLE `image`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `news`
@@ -326,13 +365,13 @@ ALTER TABLE `news`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `rule`
