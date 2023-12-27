@@ -98,10 +98,47 @@ class orderController {
                 }
             });
 
-            return res.render('website/order/thankyou',{room, Total, Code, FullName, Email, Phone, numberDay, startDate: Start, endDate: Start, title: "Hosteller - Thông tin đặt phòng", error: "Thành Công!"})
+            return res.render('website/order/thankyou',{room, Total, Code, FullName, Email, Phone, numberDay, startDate: Start, endDate: Start, title: "Hosteller - Thông tin đặt phòng"})
         } catch (err) {
             console.error(err);
             return res.status(500).send("Đã xảy ra lỗi khi đặt phòng.");
+        }
+    }
+
+    //[GET] /dat-phong/tra-cuu
+    async viewLockup(req, res) {
+        return res.render('website/lockup/index',{title: "Hosteller - Tra cứu thông tin đặt phòng"})
+    }
+
+    //[POST] /dat-phong/tra-cuu
+    async lockup(req, res) {
+        const {Code} = req.body;
+        try {
+            if(!Code) return res.render('website/lockup/index',{title: "Hosteller - Tra cứu thông tin đặt phòng"})
+
+            const order = await Order.findOne({ where: { Code: Code.toUpperCase() } });
+            if (!order) return res.render('website/lockup/index',{title: "Hosteller - Tra cứu thông tin đặt phòng", error: "Không tìm thấy đơn đặt phòng nào có mã: " + Code.toUpperCase()})
+
+            const room = await Rooms.findOne({ 
+                where: { Id: order.RoomId }, 
+                include: [
+                    {
+                        model: Category,
+                        as: 'category', 
+                        attributes: ['Name']
+                    }
+                ] 
+            });
+
+            const numberDay = Math.floor((new Date(order.End) - new Date(order.Start)) / (1000 * 60 * 60 * 24)) + 1;
+
+            const Start = `${new Date(order.Start).getDate()}-${new Date(order.Start).getMonth() + 1}-${new Date(order.Start).getFullYear()}`;
+            const End = `${new Date(order.End).getDate()}-${new Date(order.End).getMonth() + 1}-${new Date(order.End).getFullYear()}`;
+
+            return res.render('website/lockup/result',{title: "Hosteller - Kết quả tra cứu thông tin đặt phòng", order, room, numberDay, End, Start})
+        }catch(error){
+            console.error(error);
+            return res.status(500).send("Đã xảy ra lỗi khi tra cứu thông tin đặt phòng.");
         }
     }
 }
