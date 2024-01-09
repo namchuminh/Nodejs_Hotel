@@ -84,42 +84,20 @@
             <div class="widgets_item widgets_item--recommended">
                 <h4 class="widgets_item-header">Tin Tức Đề Xuất</h4>
                 <ul class="list">
-                    <li class="list-item d-flex align-items-center">
-                        <div class="media">
-                            <picture>
-                                <source data-srcset="img/placeholder.jpg" srcset="img/placeholder.jpg">
-                                <img class="lazy entered loaded" data-src="img/placeholder.jpg" src="img/placeholder.jpg" alt="media" data-ll-status="loaded">
-                            </picture>
-                        </div>
-                        <div class="main d-flex flex-column">
-                            <a class="main_title h5" href="#">Travel and Working Holidays</a>
-                            <span class="main_date">June 16, 2021</span>
-                        </div>
-                    </li>
-                    <li class="list-item d-flex align-items-center">
-                        <div class="media">
-                            <picture>
-                                <source data-srcset="img/placeholder.jpg" srcset="img/placeholder.jpg">
-                                <img class="lazy entered loaded" data-src="img/placeholder.jpg" alt="media" src="img/placeholder.jpg" data-ll-status="loaded">
-                            </picture>
-                        </div>
-                        <div class="main d-flex flex-column">
-                            <a class="main_title h5" href="#">A Hostel Decided to Social Support</a>
-                            <span class="main_date">June 16, 2021</span>
-                        </div>
-                    </li>
-                    <li class="list-item d-flex align-items-center">
-                        <div class="media">
-                            <picture>
-                                <source data-srcset="img/placeholder.jpg" srcset="img/placeholder.jpg">
-                                <img class="lazy entered loaded" data-src="img/placeholder.jpg" src="img/placeholder.jpg" alt="media" data-ll-status="loaded">
-                            </picture>
-                        </div>
-                        <div class="main d-flex flex-column">
-                            <a class="main_title h5" href="#">Travel and Working Holidays</a>
-                            <span class="main_date">June 16, 2021</span>
-                        </div>
-                    </li>
+                    <% suggestNews.forEach(function(n) {%>
+                        <li class="list-item d-flex align-items-center">
+                            <div class="media">
+                                <picture>
+                                    <source data-srcset="<%= n.Avatar %>" srcset="<%= n.Avatar %>">
+                                    <img style="width: 90px; height: 90px;" class="lazy entered loaded" data-src="<%= n.Avatar %>" src="<%= n.Avatar %>" alt="media" data-ll-status="loaded">
+                                </picture>
+                            </div>
+                            <div class="main d-flex flex-column">
+                                <a class="main_title h5" href="/tin-tuc/<%= n.Slug %>/"><%= n.Title %></a>
+                                <span class="main_date"><i class="icon-calendar icon"></i> <%= n.created %></span>
+                            </div>
+                        </li>
+                    <% }) %>
                 </ul>
             </div>
             <div class="widgets_item widgets_item--tags">

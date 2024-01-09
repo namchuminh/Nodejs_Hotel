@@ -42,9 +42,19 @@ class newsController {
             }
             
             allTags = [...new Set(allTags)];
-              
 
-            return res.render('website/news/all', { newsList, tag:allTags, totalPages, currentPage: page, category, title: "Hosteller - Tin tức" });
+            const suggestNews = await News.findAll({
+                order: Sequelize.literal('RAND()'),
+                limit: 4 // Lấy ra 4 bản ghi
+            });
+
+            for (const c of suggestNews) {
+                const d = new Date(c.createdAt).getDate() < 10 ? "0" + new Date(c.createdAt).getDate() : new Date(c.createdAt).getDate()
+                const m = (new Date(c.createdAt).getMonth() + 1) < 10 ? "0" + (new Date(c.createdAt).getMonth() + 1) : (new Date(c.createdAt).getMonth() + 1)
+                c.created = `${d}-${m}-${new Date(c.createdAt).getFullYear()}`;
+            }
+              
+            return res.render('website/news/all', { newsList, tag:allTags, totalPages, suggestNews, currentPage: page, category, title: "Hosteller - Tin tức" });
         } catch (err) {
             console.error(err);
             return res.status(500).send("Đã xảy ra lỗi khi tải danh tin tức.");

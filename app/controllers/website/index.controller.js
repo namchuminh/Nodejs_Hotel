@@ -14,6 +14,12 @@ class indexController {
                 limit: 3
             });
 
+            const rooms = await Room.findAll({
+                order: [['id', 'DESC']],
+                limit: 4,
+                order: Sequelize.literal('RAND()'),
+            });
+
             const { count, rows: newsList } = await News.findAndCountAll({
                 limit: 3,
                 order: [['Id', 'DESC']], // Thêm điều kiện ORDER BY Id DESC
@@ -32,7 +38,7 @@ class indexController {
                 room.Bed = facilityInfo ? facilityInfo.dataValues.Bed : null;
             }
 
-            return res.render('website/index', {newRooms, newsList, title: "Hosteller - Phòng nghỉ chất lượng" });
+            return res.render('website/index', {newRooms, rooms, newsList, title: "Hosteller - Phòng nghỉ chất lượng" });
         } catch (err) {
             console.error(err);
             return res.status(500).send("Đã xảy ra lỗi khi tải trang chủ.");
