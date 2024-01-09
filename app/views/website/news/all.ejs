@@ -125,27 +125,11 @@
             <div class="widgets_item widgets_item--tags">
                 <h4 class="widgets_item-header">Thẻ</h4>
                 <ul class="list d-flex flex-wrap">
-                    <li class="list-item">
-                        <a class="link underlined underlined--accent" href="#">Travel</a>
-                    </li>
-                    <li class="list-item">
-                        <a class="link underlined underlined--accent" href="#">Room</a>
-                    </li>
-                    <li class="list-item">
-                        <a class="link underlined underlined--accent" href="#">People</a>
-                    </li>
-                    <li class="list-item">
-                        <a class="link underlined underlined--accent" href="#">Guide</a>
-                    </li>
-                    <li class="list-item">
-                        <a class="link underlined underlined--accent active" href="#">Season</a>
-                    </li>
-                    <li class="list-item">
-                        <a class="link underlined underlined--accent" href="#">City</a>
-                    </li>
-                    <li class="list-item">
-                        <a class="link underlined underlined--accent" href="#">Sights</a>
-                    </li>
+                    <% tag.forEach(function(t) { %>
+                        <li class="list-item">
+                            <a class="link underlined underlined--accent" href="#"><%= t.toUpperCase() %>,</a>
+                        </li>
+                    <% }) %>
                 </ul>
             </div>
         </div>

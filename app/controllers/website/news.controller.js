@@ -29,9 +29,22 @@ class newsController {
                 news.created = `${d}-${m}-${new Date(news.createdAt).getFullYear()}`;
                 news.Content = news.Content.substring(0, 124) + " ...";
             }
+
+            const tag = await News.findAll({
+                attributes: ['Tag'],
+            });
+
+            let allTags = [];
+
+            for (const t of tag) {
+                const tags = t.dataValues.Tag.split(',').map(tag => tag.trim());
+                allTags = [...allTags, ...tags];
+            }
+            
+            allTags = [...new Set(allTags)];
               
 
-            return res.render('website/news/all', { newsList, totalPages, currentPage: page, category, title: "Hosteller - Tin tức" });
+            return res.render('website/news/all', { newsList, tag:allTags, totalPages, currentPage: page, category, title: "Hosteller - Tin tức" });
         } catch (err) {
             console.error(err);
             return res.status(500).send("Đã xảy ra lỗi khi tải danh tin tức.");
@@ -50,6 +63,10 @@ class newsController {
             if (!news) {
                 return res.render('website/error/index');
             }
+
+            const d = new Date(news.createdAt).getDate() < 10 ? "0" + new Date(news.createdAt).getDate() : new Date(news.createdAt).getDate()
+            const m = (new Date(news.createdAt).getMonth() + 1) < 10 ? "0" + (new Date(news.createdAt).getMonth() + 1) : (new Date(news.createdAt).getMonth() + 1)
+            news.dataValues.createdAt = `${d}-${m}-${new Date(news.createdAt).getFullYear()}`;
 
             const category = await Category.findAll({
                 where: {type: 1}

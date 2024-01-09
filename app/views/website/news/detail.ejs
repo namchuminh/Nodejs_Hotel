@@ -32,7 +32,7 @@
                     <div class="post_main-article_metadata">
                         <span class="item d-inline-flex align-items-center">
                             <i class="icon-calendar icon"></i>
-                            June 16, 2021
+                            <%= news.createdAt %>
                         </span>
                         <span class="item d-inline-flex align-items-center">
                             <i class="icon-eye icon"></i>
@@ -55,7 +55,7 @@
                         <ul class="list d-flex flex-wrap align-items-center">
                             <% news.Tag.split(',').forEach(function(t) { %>
                                 <li class="list-item">
-                                    <a class="link underlined underlined--accent" href="#"><%= t.toUpperCase() %></a>
+                                    <a class="link underlined underlined--accent" href="#"><%= t.toUpperCase() %>,</a>
                                 </li>
                             <% }) %>
                         </ul>
@@ -169,7 +169,7 @@
                     <ul class="list d-flex flex-wrap">
                         <% tag.forEach(function(t) { %>
                             <li class="list-item">
-                                <a class="link underlined underlined--accent" href="#"><%= t.toUpperCase() %></a>
+                                <a class="link underlined underlined--accent" href="#"><%= t.toUpperCase() %>,</a>
                             </li>
                         <% }) %>
                     </ul>

@@ -6,6 +6,7 @@ const webCustomerRoute = require("./website/customer.routes");
 const webRoomRoute = require("./website/room.routes");
 const webOrderRoute = require("./website/order.routes");
 const webNewsRoute = require("./website/news.routes");
+const webIndexRoute = require("./website/index.routes");
 
 function route(app){
     app.use("/admin/category", categoryRoute);
@@ -15,6 +16,7 @@ function route(app){
     app.use("/khach-hang", webCustomerRoute);
     app.use("/dat-phong", webOrderRoute);
     app.use("/tin-tuc", webNewsRoute);
+    app.use("/", webIndexRoute);
 }
 
 module.exports = route
