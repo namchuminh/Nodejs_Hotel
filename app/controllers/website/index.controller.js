@@ -11,13 +11,19 @@ class indexController {
         try {
             const newRooms = await Room.findAll({
                 order: [['id', 'DESC']],
-                limit: 3
+                limit: 3,
+                where: {
+                    Status: 1
+                }
             });
 
             const rooms = await Room.findAll({
                 order: [['id', 'DESC']],
                 limit: 4,
                 order: Sequelize.literal('RAND()'),
+                where: {
+                    Status: 1
+                }
             });
 
             const { count, rows: newsList } = await News.findAndCountAll({

@@ -12,7 +12,7 @@ class orderController {
         const { RoomId, startDate, endDate } = req.body;
         try {
             const room = await Rooms.findOne({ 
-                where: { Id: RoomId }, 
+                where: { Id: RoomId, Status: 1 }, 
                 include: [
                     {
                         model: Category,
@@ -36,7 +36,7 @@ class orderController {
         const { RoomId, Start, End, FullName, Email, Phone } = req.body;
         try {
             const room = await Rooms.findOne({ 
-                where: { Id: RoomId }, 
+                where: { Id: RoomId, Status: 1 }, 
                 include: [
                     {
                         model: Category,

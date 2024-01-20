@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db.config.js");
+const Rooms = require("./rooms.models.js");
 
 const Orders = sequelize.define("orders", {
   Id: {
@@ -56,3 +57,5 @@ const Orders = sequelize.define("orders", {
 });
 
 module.exports = Orders;
+
+Orders.belongsTo(Rooms, { foreignKey: 'RoomId', as: 'room' });

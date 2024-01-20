@@ -51,8 +51,10 @@
                             <b>Thanh toán:</b> 
                             <% if(order.StatusPay == 0){ %>
                                 Chưa thanh toán
-                            <% }else{ %>
+                            <% }else if(order.StatusPay == 1){ %>
                                 Đã thanh toán
+                            <% }else{ %>
+                                Đã hoàn tiền
                             <% } %>
                         </span>
                     </div>
@@ -70,14 +72,15 @@
                             <% } %>
                         </span>
                     </div>
-                    
-                    <div class="p-2 mt-4">
-                        <h4>Hình Ảnh Phòng</h4>
-                    </div> 
-                    <hr>
-                    <div class="mt-4">
-                        <img src="<%= room.Avatar %>" alt="Hình ảnh" style="max-height: 460px;">
-                    </div>
+                    <% if(order.StatusPay == 0){ %>
+                        <div class="p-2 mt-4">
+                            <h4>Hình Ảnh Phòng</h4>
+                        </div> 
+                        <hr>
+                        <div class="mt-4">
+                            <img src="<%= room.Avatar %>" alt="Hình ảnh" style="max-height: 460px;">
+                        </div>
+                    <% } %>
                 </div>
             </div>
 

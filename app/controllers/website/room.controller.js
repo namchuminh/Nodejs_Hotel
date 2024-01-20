@@ -15,7 +15,10 @@ class roomController {
             const { count, rows: roomList } = await Rooms.findAndCountAll({
                 limit: perPage,
                 offset: (page - 1) * perPage,
-                order: [['Id', 'DESC']] // Thêm điều kiện ORDER BY Id DESC
+                order: [['Id', 'DESC']], // Thêm điều kiện ORDER BY Id DESC
+                where: {
+                    Status: 1
+                }
             });
 
             const totalPages = Math.ceil(count / perPage);
@@ -40,7 +43,7 @@ class roomController {
     async viewDetail(req, res) {
         const { id } = req.params;
         try {
-            const room = await Rooms.findOne({ where: { slug: id } });
+            const room = await Rooms.findOne({ where: { slug: id, Status: 1 } });
             if (!room) {
                 return res.render('website/error/index');
             }
