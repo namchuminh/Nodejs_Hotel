@@ -1,5 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db.config.js");
+const Customer = require("./customer.models");
+
 
 const Contact = sequelize.define("contact", {
   Id: {
@@ -20,3 +22,5 @@ const Contact = sequelize.define("contact", {
 });
 
 module.exports = Contact;
+
+Contact.belongsTo(Customer, { foreignKey: 'CustomerId', as: 'customer' });

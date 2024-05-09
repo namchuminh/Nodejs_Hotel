@@ -40,8 +40,11 @@ app.use(session({
 // Middleware để gắn session vào biến toàn cục
 app.use((req, res, next) => {
   res.locals.customer = req.session.customer; // Gắn session vào biến toàn cục locals
+  res.locals.admin = req.session.admin;
   next();
 });
+
+
 
 //Import route application
 const route = require("./app/routes/index.js")
