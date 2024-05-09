@@ -7,6 +7,7 @@ const orderRoute = require("./admin/order.routes");
 const contactRoute = require("./admin/contact.routes");
 const customerRoute = require("./admin/customer.routes");
 const profileRoute = require("./admin/admin.routes");
+const dashboardRoute = require("./admin/dashboard.routes");
 const loginRoute = require("./admin/login.routes");
 const logoutRoute = require("./admin/logout.routes");
 
@@ -27,6 +28,7 @@ function route(app){
     app.use("/admin/profile", requireLogin, profileRoute);
     app.use("/admin/login", requireLogout, loginRoute);
     app.use("/admin/logout", requireLogin, logoutRoute);
+    app.use("/admin", requireLogin, dashboardRoute);
     app.use("/phong-nghi", webRoomRoute);
     app.use("/khach-hang", webCustomerRoute);
     app.use("/dat-phong", webOrderRoute);

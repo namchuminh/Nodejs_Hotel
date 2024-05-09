@@ -9,18 +9,6 @@ $(function() {
 
   var currentURL = window.location.href;
 
-  $.get(currentURL + 'thong-ke-chuyen-muc/', function(data){
-      if ($("#morris-donut-example").length) {
-        Morris.Donut({
-          element: 'morris-donut-example',
-          resize: true,
-          backgroundColor: 'transparent',
-          data: JSON.parse(data)
-        });
-      }
-  });
-
-
   function maxMinData(data){
     var max = data[0]
     var min = data[0]
@@ -40,15 +28,15 @@ $(function() {
     return [min, max + 200000]
   }
 
-  $.get(currentURL + 'thong-ke-doanh-thu/', function(data){
-    var min = maxMinData(JSON.parse(data))[0]
-    var max = maxMinData(JSON.parse(data))[1]
+  $.get(currentURL + 'revenue/', function(data){
+    var min = maxMinData(data)[0]
+    var max = maxMinData(data)[1]
     const formatter = new Intl.NumberFormat('vi-VN', {
       style: 'currency',
       currency: 'VND'
     });
     const xValues = ["Tháng 1","Tháng 2","Tháng 3","Tháng 4","Tháng 5","Tháng 6","Tháng 7","Tháng 8","Tháng 9","Tháng 10","Tháng 11","Tháng 12"];
-    const yValues = JSON.parse(data);
+    const yValues = data;
     new Chart("myChart", {
       type: "line",
       data: {
