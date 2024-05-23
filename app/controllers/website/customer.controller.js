@@ -6,10 +6,47 @@ class customerController {
 
     //[GET] /khach-hang
     async index(req, res) {
-        return res.render('website/customer/index', {title: "Hosteller - Thông tin khách hàng"})
+        return res.render('website/customer/index', {title: "Hosteller - Thông tin khách hàng", name: req.session.customer.FullName, phone: req.session.customer.Phone, email: req.session.customer.Email, username: req.session.customer.Username})
     }
 
-    //[GET] /khach-hang//dang-nhap
+    //[GET] /khach-hang/update
+    async update(req, res) {
+        const {name, phone, email, password} = req.body;
+        try{
+            const customer = await Customer.findOne({
+                where: {
+                    Username: req.session.customer.Username
+                }
+            });
+
+            let passwordCurrent = customer.Password;
+
+            if(password != '' || password){
+                const hashedPassword = crypto.createHash('md5').update(password).digest('hex');
+                passwordCurrent = hashedPassword
+            }
+
+            customer.FullName = name;
+            customer.Phone = phone;
+            customer.Email = email;
+            customer.Password = passwordCurrent;
+            await customer.save();
+
+            const customerUpdate = await Customer.findOne({
+                where: {
+                    Username: req.session.customer.Username
+                }
+            });
+
+            req.session.customer = customerUpdate;
+
+            return res.render('website/customer/index', {title: "Hosteller - Thông tin khách hàng", name: req.session.customer.FullName, phone: req.session.customer.Phone, email: req.session.customer.Email, username: req.session.customer.Username})
+        }catch(error){
+            res.status(500).json({ message: 'Đã xảy ra lỗi khi cập nhật thông tin khách hàng!' });
+        }
+    }
+
+    //[GET] /khach-hang/dang-nhap
     async viewLogin(req, res) {
         return res.render('website/customer/login', {title: "Hosteller - Đăng nhập"})
     }
