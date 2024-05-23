@@ -1,9 +1,10 @@
 const Sequelize = require('sequelize');
 const Rooms = require("../../models/rooms.models");
-const Category = require("../../models/category.models");
+const Orders = require("../../models/orders.models");
 const Facility = require("../../models/facility.models");
 const Rule = require("../../models/rule.models");
 const Image = require("../../models/image.models");
+const { Op } = require('sequelize');
 
 class roomController {
     //[GET] /phong-nghi
@@ -11,6 +12,36 @@ class roomController {
         try {
             const perPage = 5;
             const page = parseInt(req.query.trang) || 1;
+
+            const { ngaytra, ngaythue, nguoilon, treem } = req.query;
+
+            if (ngaythue) {
+                const People = parseInt(nguoilon) + parseInt(treem);
+                const { count, rows: roomList } = await Rooms.findAndCountAll({
+                    limit: perPage,
+                    offset: (page - 1) * perPage,
+                    order: [['Id', 'DESC']], // Thêm điều kiện ORDER BY Id DESC
+                    where: {
+                        Status: 1,
+                        People: {
+                            [Op.gte]: People
+                        }
+                    }
+                });
+
+                const totalPages = Math.ceil(count / perPage);
+
+                for (const room of roomList) {
+
+                    const facilityInfo = await Facility.findOne({ where: { RoomId: room.Id } });
+
+                    room.Bed = facilityInfo ? facilityInfo.dataValues.Bed : null;
+
+                    room.Description = room.Description.replace(/<[^>]+>/g, '').substring(0, 62) + " ...";
+                }
+
+                return res.render('website/room/all', { roomList, totalPages, currentPage: page, title: "Hosteller - Tìm kiếm phòng nghỉ", search: true, ngaytra, ngaythue, nguoilon, treem });
+            }
 
             const { count, rows: roomList } = await Rooms.findAndCountAll({
                 limit: perPage,
@@ -32,7 +63,7 @@ class roomController {
                 room.Description = room.Description.replace(/<[^>]+>/g, '').substring(0, 62) + " ...";
             }
 
-            return res.render('website/room/all', { roomList, totalPages, currentPage: page, title: "Hosteller - Danh sách phòng nghỉ" });
+            return res.render('website/room/all', { roomList, totalPages, currentPage: page, title: "Hosteller - Danh sách phòng nghỉ", search: false});
         } catch (err) {
             console.error(err);
             return res.status(500).send("Đã xảy ra lỗi khi tải danh sách phòng.");

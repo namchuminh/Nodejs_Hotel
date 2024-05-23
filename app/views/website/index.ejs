@@ -12,44 +12,44 @@
                         Dịch vụ cho thuê phòng nghỉ trực tuyến, giúp bạn có một trải nghiệm nghỉ dưỡng tuyệt hảo!
                     </p>
                 </div>
-                <form class="booking aos-init aos-animate" action="#" method="post" autocomplete="off" data-type="booking" data-aos="fade-up">
+                <form class="booking aos-init aos-animate" action="/phong-nghi/" method="get" autocomplete="off" data-type="booking" data-aos="fade-up">
                     <div class="item-wrapper d-sm-flex flex-wrap flex-lg-nowrap align-items-lg-center">
                         <div class="booking_group d-flex flex-column">
-                            <label class="booking_group-label h5" for="checkIn">Check-in</label>
+                            <label class="booking_group-label h5" for="checkIn">Ngày Thuê</label>
                             <div class="booking_group-wrapper">
                                 <i class="icon-calendar icon"></i>
-                                <input class="booking_group-field field required" data-type="date" data-start="true" type="text" id="checkIn" value="Add date" readonly="">
+                                <input class="booking_group-field field required" data-type="date" data-start="true" type="text" id="checkIn" value="" readonly="" required name="ngaythue">
                                 <i class="icon-chevron_down icon"></i>
                             </div>
                         </div>
                         <div class="booking_group d-flex flex-column">
-                            <label class="booking_group-label h5" for="checkOut">Check-out</label>
+                            <label class="booking_group-label h5" for="checkOut">Ngày Trả</label>
                             <div class="booking_group-wrapper">
                                 <i class="icon-calendar icon"></i>
-                                <input class="booking_group-field field required" data-type="date" data-end="true" type="text" id="checkOut" value="Add date" readonly="" style="pointer-events: none;">
+                                <input class="booking_group-field field required" data-type="date" data-end="true" type="text" id="checkOut" value="" readonly="" required name="ngaytra" style="pointer-events: none;">
                                 <i class="icon-chevron_down icon"></i>
                             </div>
                         </div>
                         <div class="booking_group d-flex flex-column">
-                            <span class="booking_group-label h5">Guests</span>
+                            <span class="booking_group-label h5">Số Người</span>
                             <div class="booking_group-wrapper booking_group-wrapper--guests">
                                 <i class="icon-user icon"></i>
-                                <div class="booking_group-field dropdown-toggle" role="presentation" id="guests" data-bs-toggle="collapse" data-bs-target="#bookingDropdown">1 adult</div>
+                                <div class="booking_group-field dropdown-toggle" role="presentation" id="guests" data-bs-toggle="collapse" data-bs-target="#bookingDropdown">1 người</div>
                                 <div class="booking_group-dropdown collapse" id="bookingDropdown">
                                     <div class="content">
                                         <div class="booking_group-dropdown_wrapper d-flex align-items-center justify-content-between">
-                                            <label class="label h5" for="adults">Adults</label>
+                                            <label class="label h5" for="adults">Người lớn</label>
                                             <div class="main d-flex align-items-center justify-content-between">
                                                 <a class="qty_minus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="true"></a>
-                                                <input class="field required" id="adults" type="text" value="1">
+                                                <input class="field required" id="adults" type="text" value="1" name="nguoilon">
                                                 <a class="qty_plus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="">+</a>
                                             </div>
                                         </div>
                                         <div class="booking_group-dropdown_wrapper d-flex align-items-center justify-content-between">
-                                            <label class="label h5" for="children">Children</label>
+                                            <label class="label h5" for="children">Trẻ em</label>
                                             <div class="main d-flex align-items-center justify-content-between">
                                                 <a class="qty_minus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="true"></a>
-                                                <input class="field required" id="children" type="text" value="0">
+                                                <input class="field required" id="children" type="text" value="0" name="treem">
                                                 <a class="qty_plus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="">+</a>
                                             </div>
                                         </div>
@@ -686,5 +686,18 @@
     </section>
     <!-- contacts section end -->
 </main>
-<script src="/public/website/js/index.min.js"></script>
 <%- include('./layouts/footer.ejs') %>
+<script src="/public/website/js/index.min.js"></script>
+<script>
+    // Lấy ngày hiện tại
+    const today = new Date();
+    // Lấy các thành phần ngày, tháng, năm
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const year = today.getFullYear();
+    // Định dạng ngày theo mm.dd.yyyy
+    const formattedDate = `${month}.${day}.${year}`;
+    // Gán giá trị mặc định cho input
+    document.getElementById('checkIn').value = formattedDate;
+    document.getElementById('checkOut').value = formattedDate;
+</script>
