@@ -532,11 +532,19 @@
                                     <div class="main_amenities">
                                         <span class="main_amenities-item d-inline-flex align-items-center">
                                             <i class="icon-user icon"></i>
-                                            2 Sleeps
+                                            <%= related[i].dataValues.People %> người
                                         </span>
                                         <span class="main_amenities-item d-inline-flex align-items-center">
                                             <i class="icon-bunk_bed icon"></i>
-                                            1 bunk bed
+                                            <% if(related[i].facility.Bed == 1){ %>
+                                                1 giường lớn
+                                            <% }else if(related[i].facility.Bed == 2){ %>
+                                                2 giường nhỏ
+                                            <% }else if(related[i].facility.Bed == 3){ %>
+                                                3 giường
+                                            <% }else{ %>
+                                                1 giường lớn
+                                            <% } %>
                                         </span>
                                     </div>
                                     <a class="link link--arrow d-inline-flex align-items-center" href="/phong-nghi/<%= related[i].dataValues.Slug %>/">
